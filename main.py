@@ -42,4 +42,28 @@ def deletarPontos():
     global pontos
     pontos = []
 
+def desenharLinhas():
+    for i in range(len(pontos) - 1):
+        ponto1 = pontos[i]
+        ponto2 = pontos[i + 1]
+        x1, y1 = ponto1["coordenadas"]
+        x2, y2 = ponto2["coordenadas"]
+        pygame.draw.line(tela, branco, (x1, y1), (x2, y2), 2)
+        meioX = (x1 + x2) // 2
+        meioY = (y1 + y2) // 2
+        somaX = x1 + x2
+        somaY = y1 + y2
+        textoSoma = fonte.render(f"({somaX}, {somaY})", True, vermelho)
+        rectSoma = textoSoma.get_rect(center=(meioX, meioY))
+        tela.blit(textoSoma, rectSoma)
+        texto1 = fonte.render(f"({x1}, {y1})", True, branco)
+        rect1 = texto1.get_rect(center=(x1, y1 - 20))
+        tela.blit(texto1, rect1)
+        texto2 = fonte.render(f"({x2}, {y2})", True, branco)
+        rect2 = texto2.get_rect(center=(x2, y2 - 20))
+        tela.blit(texto2, rect2)
+
+carregarPontos()
+
 pygame.display.flip()
+
