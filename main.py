@@ -26,5 +26,20 @@ def abrirDialogo():
     root.destroy()
     return nome
 
+def salvarPontos():
+    with open("pontos.json", "w") as arquivo:
+        json.dump(pontos, arquivo)
+
+def carregarPontos():
+    global pontos
+    try:
+        with open("pontos.json", "r") as arquivo:
+            pontos = json.load(arquivo)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pontos = []
+
+def deletarPontos():
+    global pontos
+    pontos = []
 
 pygame.display.flip()
