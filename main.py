@@ -65,5 +65,61 @@ def desenharLinhas():
 
 carregarPontos()
 
+direita = True
+pygame.mixer.music.load("somDeEspaço.mp3")
+pygame.mixer.music.play(-1)
+
+rodando = True
+while rodando:
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            salvarPontos()
+            pygame.quit()
+            sys.exit()
+        elif evento.type == pygame.KEYDOWN:
+            if evento.key == pygame.K_ESCAPE:
+                salvarPontos()
+                pygame.quit()
+                sys.exit()
+            elif evento.key == pygame.K_F10:
+                salvarPontos()
+            elif evento.key == pygame.K_F11:
+                carregarPontos()
+            elif evento.key == pygame.K_F12:
+                deletarPontos()
+        elif evento.type == pygame.MOUSEBUTTONDOWN:
+            if evento.button == 1:
+                try:
+                    x, y = evento.pos
+                except:
+                    continue
+                try:
+                    nome = abrirDialogo()
+                except:
+                    nome = None
+                ponto = {
+                    "coordenadas": (x, y),
+                    "nome": nome
+                }
+                pontos.append(ponto)
+                winsound.Beep(500, 300)
+    tela.blit(fundo, (0, 0))
+    if len(pontos) > 1:
+        desenharLinhas()
+    for ponto in pontos:
+        x, y = ponto["coordenadas"]
+        nome = ponto["nome"]
+        pygame.draw.circle(tela, branco, (x, y), 5)
+        textoNome = fonte.render(nome, True, branco)
+        rectNome = textoNome.get_rect(center=(x, y - 35))
+        tela.blit(textoNome, rectNome)
+    textoSalvar = fonte.render("Pressione F10 para salvar os pontos", True, branco)
+    textoCarregar = fonte.render("Pressione F11 para carregar os pontos", True, branco)
+    textoDeletar = fonte.render("Pressione F12 para deletar os pontos", True, branco)
+    tela.blit(textoSalvar, (10, 10))
+    tela.blit(textoCarregar, (10, 40))
+    tela.blit(textoDeletar, (10, 70))
+
+
 pygame.display.flip()
 
