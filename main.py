@@ -119,5 +119,6 @@ while rodando:
     tela.blit(textoSalvar, (10, 10))
     tela.blit(textoCarregar, (10, 40))
     tela.blit(textoDeletar, (10, 70))
+
     pygame.display.flip()
 
